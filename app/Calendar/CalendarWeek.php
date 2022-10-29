@@ -1,6 +1,7 @@
 <?php
 namespace App\Calendar;
 
+use App\Models\Calendar\HolidaySetting;
 use Carbon\Carbon;
 
 class CalendarWeek {
@@ -20,7 +21,7 @@ class CalendarWeek {
 	/**
 	 * @return CalendarWeekDay[]
 	 */
-	function getDays(){
+	function getDays(HolidaySetting $setting){
 
 		$days = [];
 
@@ -44,7 +45,7 @@ class CalendarWeek {
 				
 			//今月
 			$day = new CalendarWeekDay($tmpDay->copy());	
-			$days[] = $day;
+			$day->checkHoliday($setting);
 			//翌日に移動
 			$tmpDay->addDay(1);
 		}
